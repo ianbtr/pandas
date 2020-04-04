@@ -220,8 +220,8 @@ class TestDataFrameReprInfoEtc:
         df_1 = DataFrame(np.full((61, 1), NA))
         df_2 = DataFrame(np.full((61, 1), NA), dtype='Int64')
 
-        expected = repr(df_2)
         result = repr(df_1)
+        expected = repr(df_2)
 
         assert result == expected
 
