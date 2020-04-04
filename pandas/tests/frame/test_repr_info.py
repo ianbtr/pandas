@@ -12,6 +12,7 @@ from pandas import (
     date_range,
     option_context,
     period_range,
+    NA  # TODO validate import ordering (this is probably fine but still)
 )
 import pandas._testing as tm
 
@@ -212,6 +213,16 @@ class TestDataFrameReprInfoEtc:
     def test_repr_np_nat_with_object(self, arg, box, expected):
         # GH 25445
         result = repr(box([arg("NaT")], dtype=object))
+        assert result == expected
+
+    def test_repr_pd_na_with_object(self):
+        # GH 33065
+        df_1 = DataFrame(np.full((61, 1), NA))
+        df_2 = DataFrame(np.full((61, 1), NA), dtype='Int64')
+
+        expected = repr(df_2)
+        result = repr(df_1)
+
         assert result == expected
 
     def test_frame_datetime64_pre1900_repr(self):
